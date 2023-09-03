@@ -1,0 +1,7 @@
+# Changes the status of the bot over 5 seconds
+bot_status = cycle(["Try !ping", "Try !8", "Try !hello"])
+@tasks.loop(seconds=5)
+async def change_status():
+    status = next(bot_status)
+    await client.change_presence(activity=discord.Game(status))
+
