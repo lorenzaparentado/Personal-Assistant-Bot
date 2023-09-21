@@ -12,7 +12,7 @@ class Eight_Ball(commands.Cog):
 
     @commands.command(aliases=["8ball","eight_ball","eight ball", "8 ball", "8"])
     async def eightball(self, ctx, *, question):
-        with open("responses.txt", "r") as f:
+        with open("text\responses.txt", "r") as f:
             random_responses = f.readlines()
             response = random.choice(random_responses)
 

@@ -31,5 +31,34 @@ class Events(commands.Cog):
 
         await ctx.send(f"Event '{event_name.content}' added!")
 
+    @commands.command()
+    async def list_events(self, ctx):
+        if self.events:
+            event_list = "\n".join(self.events.keys())
+            await ctx.send(f"Events:\n{event_list}")
+        else:
+            await ctx.send("No events have been added.")
+
+    @commands.command()
+    async def tasks(self, ctx):
+        today = datetime.now().date()
+        tasks_today = []
+
+        for event_name, event_data in self.events.items():
+            event_date = event_data['date_time'].date()
+            event_time = event_data['date_time'].time()
+
+            if event_data['repeat'] and event_date.weekday() == today.weekday():
+                tasks_today.append(f"{event_name} at {event_time.strftime('%H:%M')}")
+            elif event_date == today:
+                tasks_today.append(f"{event_name} at {event_time.strftime('%H:%M')}")
+
+        if tasks_today:
+            await ctx.send(f"Tasks for today ({today}):")
+            for task in tasks_today:
+                await ctx.send(task)
+        else:
+            await ctx.send("No tasks for today.")
+
 async def setup(client):
     await client.add_cog(Events(client))
