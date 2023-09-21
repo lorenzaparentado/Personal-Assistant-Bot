@@ -31,11 +31,16 @@ async def load():
         if filename.endswith(".py"):
             await client.load_extension(f"cogs.{filename[:-3]}")
 
+async def get_token_from_file():
+    with open('token.txt') as f:
+        return f.readline()
+
 # Loads client
 async def main():
+    token = await get_token_from_file()
     async with client:
         await load()
-        await client.start('MTE0NzIwMDQ5ODkxNTYxMDY1NA.GMM8ya.Zux2Ply7Y4v1JOJuRYTAzYuCdUyEJ34qaJE_I4')
+        await client.start(token)
 
 
 asyncio.run(main())
