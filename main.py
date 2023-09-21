@@ -42,10 +42,5 @@ async def main():
         await load()
         await client.start(token)
 
-
 asyncio.run(main())
-
-
-
-    
 
