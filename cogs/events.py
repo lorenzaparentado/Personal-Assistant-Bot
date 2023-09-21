@@ -59,6 +59,14 @@ class Events(commands.Cog):
                 await ctx.send(task)
         else:
             await ctx.send("No tasks for today.")
+    
+    @commands.command()
+    async def delete_event(self, ctx, event_name: str):
+        if event_name in self.events:
+            del self.events[event_name]
+            await ctx.send(f"Event '{event_name}' has been deleted.")
+        else:
+            await ctx.send(f"Event '{event_name}' not found in the list of events.")
 
 async def setup(client):
     await client.add_cog(Events(client))
